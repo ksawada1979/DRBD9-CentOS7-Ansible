@@ -1,23 +1,36 @@
 ---
-    - name: yum group-install
-      yum: name="{{ item }}" state=present
-      with_items:
-        - "@Development Tools"
-        - libxslt
-        - pygobject2
-        - help2man
-        - git
-        - lvm2
-    - name: upgrade all packags
-      yum: name=* state=latest
-
-
-    - name: hosts Change
+    - name: DRBD9 Get
       git: repo=git://git.drbd.org/drbd-9.0.git
            dest=/tmp/drbd9
 
-    - name: hosts Change1
+    - name: DRBD9 make
       shell: chdir=/tmp/drbd9 make
 
-    - name: hosts Change2
+    - name: DRBD9 install
       shell: chdir=/tmp/drbd9 make install
+
+    - name: drbd-util get
+      git: repo=git://git.drbd.org/drbd-utils.git
+           dest=/tmp/drbd-utils
+
+    - name: autogen.sh
+      shell: chdir=/tmp/drbd-utils ./autogen.sh
+
+    - name: drbd-util configure
+      shell: chdir=/tmp/drbd-utils ./configure --prefix=/usr --localstatedir=/var --sysconfdir=/etc
+
+    - name: drbd-util make
+      shell: chdir=/tmp/drbd-utils make
+
+    - name: drbd-util install
+      shell: chdir=/tmp/drbd-utils make install
+
+    - name: DRBD Manage Get
+      git: repo=git://git.drbd.org/drbdmanage.git
+           dest=/tmp/drbdmanage
+
+    - name: DRBD Manage make
+      shell: chdir=/tmp/drbdmanage make
+
+    - name: DRBD Manage install
+      shell: chdir=/tmp/drbdmanage make install
