@@ -5,6 +5,7 @@
   sudo: yes
 
   roles:
-#    - ntp
-#    - timezone
-    - drbd9
+    - ntp
+    - timezone
+    - drbd9_ready
+    - reboot
