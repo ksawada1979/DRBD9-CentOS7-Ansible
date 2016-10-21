@@ -1,0 +1,12 @@
+---
+    - name: yum group-install
+      yum: name="{{ item }}" state=present
+      with_items:
+        - "@Development Tools"
+        - libxslt
+        - pygobject2
+        - help2man
+        - git
+        - lvm2
+    - name: upgrade all packags
+      yum: name=* state=latest

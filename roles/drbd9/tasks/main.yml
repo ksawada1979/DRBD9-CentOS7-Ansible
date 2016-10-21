@@ -1,0 +1,23 @@
+---
+    - name: yum group-install
+      yum: name="{{ item }}" state=present
+      with_items:
+        - "@Development Tools"
+        - libxslt
+        - pygobject2
+        - help2man
+        - git
+        - lvm2
+    - name: upgrade all packags
+      yum: name=* state=latest
+
+
+    - name: hosts Change
+      git: repo=git://git.drbd.org/drbd-9.0.git
+           dest=/tmp/drbd9
+
+    - name: hosts Change1
+      shell: chdir=/tmp/drbd9 make
+
+    - name: hosts Change2
+      shell: chdir=/tmp/drbd9 make install
