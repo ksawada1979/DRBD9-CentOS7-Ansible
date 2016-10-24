@@ -34,3 +34,10 @@
 
     - name: DRBD Manage install
       shell: chdir=/tmp/drbdmanage make install
+
+    - name: hosts Change
+      template: src="roles/drbd9/templete/hosts"
+                dest="/etc/hosts"
+
+    - name: Lvm Create
+      lvg: vg=drbdpool pvs=/dev/sdb1
